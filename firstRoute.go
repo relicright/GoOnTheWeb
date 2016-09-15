@@ -11,6 +11,8 @@ func main() {
 	// in the DefaultServeMux.
 	// The documentation for ServeMux explains how patterns are matched.
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request){
+
+		// Fprint uses a writer that is defined, in this case the http.ResponseWriter
 		fmt.Fprintf(w, "Hello, Go Web Development")
 	})
 
