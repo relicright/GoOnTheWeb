@@ -46,6 +46,29 @@ func main() {
 		}
 	})
 
+	http.HandleFunc("/guild", func(w http.ResponseWriter, r *http.Request){
+
+		p := Page{Name: "Guild"}
+		if name := r.FormValue("name"); name != ""{
+			p.Name = name
+		}
+
+		// ExecuteTemplate applies the template associated with t that has the given
+		// name to the specified data object and writes the output to wr.
+		// If an error occurs executing the template or writing its output,
+		// execution stops, but partial results may already have been written to
+		// the output writer.
+		if err := templates.ExecuteTemplate(w, "guild.html", p); err != nil{
+
+			// If there was a problem we can use 'http.Error(ResponseWriter, string, code)'
+			// to alter the user there was a problem
+			//********************************************************
+			// Error replies to the request with the specified error message and HTTP code.
+			// The error message should be plain text.
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	})
+
 	fmt.Println(http.ListenAndServe("localhost:9000", nil))
 }
 
